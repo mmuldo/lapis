@@ -13,7 +13,6 @@
     tree
     brave
     mpv
-    kitty
 
     neovim
     
@@ -44,6 +43,7 @@
   };
 
   programs.zsh.enable = true;
+  environment.pathsToLink = [ "/share/zsh" ];
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -75,6 +75,23 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+  };
+
+  console.useXkbConfig = true;
+  services.xserver.xkb = {
+    layout = "us";
+    options = "ctrl:swapcaps";
+  };
+
+  fonts = {
+    packages = with pkgs; [
+      fantasque-sans-mono
+    ];
+    fontconfig.defaultFonts = {
+      monospace = [ "Fantasque Sans Mono" ];
+      serif = [ "Fantasque Sans Mono" ];
+      sansSerif = [ "Fantasque Sans Mono" ];
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
