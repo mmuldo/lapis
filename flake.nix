@@ -10,14 +10,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs: {
-    nixosConfigurations.lapis = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = inputs;
-      modules = [
-        ./configuration.nix
-	inputs.home-manager.nixosModules.default
-      ];
+  outputs =
+    { nixpkgs, ... }@inputs:
+    {
+      nixosConfigurations.lapis = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs;
+        modules = [
+          ./configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
     };
-  };
 }
