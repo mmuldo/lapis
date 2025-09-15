@@ -333,6 +333,14 @@
     temperature.night = 2000;
   };
 
+  programs.ranger = {
+    enable = true;
+    settings = {
+      preview_images = true;
+      preview_images_method = "kitty";
+    };
+  };
+
   # you should not change this value, eve if you update home manager
   home.stateVersion = "25.05"; # Did you read the comment?
 }

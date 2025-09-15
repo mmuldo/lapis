@@ -16,7 +16,6 @@
     spotify
     zoom-us
     brightnessctl
-    ranger
 
     #######################################
     # neovim
