@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 {
@@ -21,6 +22,7 @@
     enable = true;
     package = null;
     portalPackage = null;
+    systemd.variables = ["--all"];
 
     settings = {
       "$mod" = "SUPER";
@@ -98,6 +100,10 @@
         "col.active_border" = "rgba(eb6f92ee)";
         "col.inactive_border" = "rgba(6e6a86aa)";
       };
+
+      env = [
+        "NIXOS_OZONE_WL,1"
+      ];
     };
   };
 
@@ -339,6 +345,13 @@
       preview_images = true;
       preview_images_method = "kitty";
     };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 24;
   };
 
   # you should not change this value, eve if you update home manager
