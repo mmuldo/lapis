@@ -16,6 +16,7 @@
     spotify
     zoom-us
     brightnessctl
+    obsidian
 
     #######################################
     # neovim
