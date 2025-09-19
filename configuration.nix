@@ -17,6 +17,9 @@
     zoom-us
     brightnessctl
     obsidian
+    libnotify
+    wl-clipboard
+    swayidle
 
     #######################################
     # neovim
@@ -46,9 +49,26 @@
   ];
   nixpkgs.config.allowUnfree = true;
 
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos.org/"
+      "https://nix-community.cachix.org"
+      "https://nixpkgs-wayland.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+    ];
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelParams = [
+    "iwlwifi.11n_disable=1"
+    "iwlwifi.swcrypto=1"
+    "iwlwifi.power_save=0"
+  ];
 
   networking.hostName = "lapis";
   networking.networkmanager.enable = true;
@@ -99,6 +119,9 @@
   fonts = {
     packages = with pkgs; [
       fantasque-sans-mono
+      nerd-fonts.caskaydia-cove
+      noto-fonts
+      noto-fonts-extra
     ];
     fontconfig.defaultFonts = {
       monospace = [ "Fantasque Sans Mono" ];
@@ -106,6 +129,8 @@
       sansSerif = [ "Fantasque Sans Mono" ];
     };
   };
+
+  environment.localBinInPath = true;
 
   # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
   # and migrated your data accordingly.

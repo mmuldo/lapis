@@ -4,6 +4,33 @@
   ...
 }:
 {
+  gtk = {
+    enable = true;
+    theme = {
+      name = "rose-pine";
+      package = pkgs.rose-pine-gtk-theme;
+    };
+    iconTheme = {
+      name = "rose-pine";
+      package = pkgs.rose-pine-icon-theme;
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      gtk-theme = "rose-pine";
+      icon-theme = "rose-pine";
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 24;
+  };
+
   programs.git = {
     enable = true;
     includes = [
@@ -22,7 +49,7 @@
     enable = true;
     package = null;
     portalPackage = null;
-    systemd.variables = ["--all"];
+    systemd.variables = [ "--all" ];
 
     settings = {
       "$mod" = "SUPER";
@@ -34,6 +61,8 @@
         "$mod, d, exec, $menu"
         "$mod, Return, exec, $terminal"
         "$mod, x, killactive"
+        "$mod, e, exec, emoji-picker"
+        "$mod, o, exec, powermenu"
         "$modMod, o, exit"
         "$modMod, w, exec, pkill waybar; waybar &"
 
@@ -83,7 +112,10 @@
         ", XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
       ];
 
-      exec-once = [ "waybar &" ];
+      exec-once = [
+        "waybar &"
+        "swayidle -w before-sleep 'hyprlock'"
+      ];
 
       input = {
         kb_layout = "us";
@@ -112,6 +144,49 @@
     settings = {
       preload = [ "${./wallpaper.png}" ];
       wallpaper = [ ",${./wallpaper.png}" ];
+    };
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        ignore_empty_input = true;
+      };
+      background = {
+        path = "${./wallpaper.png}";
+        blur_passes = 1;
+      };
+
+      input-field = {
+        size = "200, 50";
+        rounding = 0;
+        outer_color = "rgba(235, 111, 146, 1.0)";
+        inner_color = "rgba(31, 29, 46, 1.0)";
+        font_color = "rgba(224, 222, 244, 1.0)";
+        check_color = "rgba(49, 116, 143, 1.0)";
+        fail_color = "rgba(246, 193, 119, 1.0)";
+        outline_thickness = 2;
+        fade_timeout = 5000;
+        position = "0, -120";
+      };
+
+      label = [
+        {
+          text = "$USER";
+          color = "rgba(235, 111, 146, 1.0)";
+          font_size = 50;
+          font_family = "Monospace";
+          position = "0, 120";
+        }
+
+        {
+          text = "$TIME12";
+          color = "rgba(235, 111, 146, 1.0)";
+          font_size = 100;
+          font_family = "Monospace";
+        }
+      ];
     };
   };
 
@@ -176,39 +251,39 @@
       };
     };
     style = ''
-            * {
-              font-weight: bold;
-      	color: #e0def4;
-            }
+      * {
+        font-weight: bold;
+        color: #e0def4;
+      }
 
-            window#waybar {
-              background: transparent;
-            }
+      window#waybar {
+        background: transparent;
+      }
 
-            .modules-left, .modules-right {
-      	margin: 5px;
-            }
+      .modules-left, .modules-right {
+        margin: 5px;
+      }
 
 
-            .modules-left > * > *,
-            .modules-right > * > * {
-              margin: 0 3px;
-              padding: 0 5px;
-      	background: #524f67;
-            }
+      .modules-left > * > *,
+      .modules-right > * > * {
+        margin: 0 3px;
+        padding: 0 5px;
+        background: #524f67;
+      }
 
-            #workspaces {
-              padding: 0;
-            }
+      #workspaces {
+        padding: 0;
+      }
 
-            #workspaces button {
-              padding: 0 5px;
-      	border-radius: 0;
-            }
+      #workspaces button {
+        padding: 0 5px;
+        border-radius: 0;
+      }
 
-            #workspaces button.active {
-              background: #eb6f92;
-            }
+      #workspaces button.active {
+        background: #eb6f92;
+      }
     '';
   };
 
@@ -347,13 +422,65 @@
     };
   };
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 24;
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        width = 400;
+        offset = "5x5";
+
+        progress_bar_min_width = 380;
+        progress_bar_max_width = 380;
+        progress_bar_corner_radius = 2;
+
+        padding = 10;
+        horizontal_padding = 10;
+        frame_width = 1;
+        gap_size = 3;
+        font = "Monospace 14";
+
+        icon_theme = "rose-pine";
+        enable_recursive_icon_lookup = true;
+
+        background = "#26233a";
+        foreground = "#e0def4";
+      };
+
+      urgency_low = {
+        background = "#26273d";
+        highlight = "#31748f";
+        frame_color = "#31748f";
+        default_icon = "dialog-information";
+        format = "<b><span foreground='#31748f'>%s</span></b>\n%b";
+      };
+
+      urgency_normal = {
+        background = "#362e3c";
+        highlight = "#f6c177";
+        frame_color = "#f6c177";
+        default_icon = "dialog-warning";
+        format = "<b><span foreground='#f6c177'>%s</span></b>\n%b";
+      };
+
+      urgency_critical = {
+        background = "#35263d";
+        highlight = "#eb6f92";
+        frame_color = "#eb6f92";
+        default_icon = "dialog-error";
+        format = "<b><span foreground='#eb6f92'>%s</span></b>\n%b";
+      };
+    };
   };
 
-  # you should not change this value, eve if you update home manager
+  home.file.".local/bin/emoji-picker" = {
+    source = ./bin/emoji-picker.sh;
+    executable = true;
+  };
+  home.file.".local/bin/powermenu" = {
+    source = ./bin/powermenu.sh;
+    executable = true;
+  };
+
+  # you should not change this value, even if you update home manager
   home.stateVersion = "25.05"; # Did you read the comment?
 }
