@@ -20,6 +20,8 @@
     libnotify
     wl-clipboard
     swayidle
+    pinentry-gtk2
+    pass
 
     #######################################
     # neovim
@@ -85,6 +87,17 @@
       "networkmanager"
     ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCNDIBIA6zcf8J13vBl9jqMyd/bHqgLCh3W/uNe9v9l matt.muldowney@gmail.com"
+    ];
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
   };
 
   programs.zsh.enable = true;
@@ -131,6 +144,13 @@
   };
 
   environment.localBinInPath = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-gtk2;
+  };
+
+  programs.browserpass.enable = true;
 
   # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
   # and migrated your data accordingly.
