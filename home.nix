@@ -350,16 +350,18 @@
       main = {
         terminal = "${pkgs.kitty}/bin/kitty";
       };
-      colors = {
+      colors = let
+        highlight = "f6c177ff";
+      in {
         background = "191724ff";
         text = "e0def4ff";
-        prompt = "c4a7e7ff";
+        prompt = "${highlight}";
         placeholder = "6e6a86ff";
-        input = "c4a7e7ff";
-        match = "c4a7e7ff";
+        input = "${highlight}";
+        match = "${highlight}";
         selection = "6e6a86ff";
         selection-text = "191724ff";
-        selection-match = "c4a7e7ff";
+        selection-match = "${highlight}";
         border = "eb6f92ff";
       };
       border = {
