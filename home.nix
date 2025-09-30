@@ -4,6 +4,19 @@
   ...
 }:
 {
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+    style.name = "kvantum";
+  };
+
+  xdg.configFile = {
+    "Kvantum/kvantum.kvconfig".text = ''
+      theme=rose-pine-love
+    '';
+    "Kvantum/rose-pine-love".source = "${pkgs.rose-pine-kvantum}/share/Kvantum/themes/rose-pine-love";
+  };
+
   gtk = {
     enable = true;
     theme = {

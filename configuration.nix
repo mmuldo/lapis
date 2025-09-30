@@ -23,6 +23,7 @@
     pinentry-gtk2
     pass
     bemoji
+    anki
 
     #######################################
     # neovim
