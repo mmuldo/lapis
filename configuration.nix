@@ -22,6 +22,7 @@
     swayidle
     pinentry-gtk2
     pass
+    bemoji
 
     #######################################
     # neovim

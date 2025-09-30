@@ -55,13 +55,13 @@
       "$mod" = "SUPER";
       "$modMod" = "SUPER SHIFT";
       "$terminal" = "kitty";
-      "$menu" = "wofi --show drun";
+      "$menu" = "fuzzel";
 
       bind = [
         "$mod, d, exec, $menu"
         "$mod, Return, exec, $terminal"
         "$mod, x, killactive"
-        "$mod, e, exec, emoji-picker"
+        "$mod, e, exec, bemoji -n"
         "$mod, o, exec, powermenu"
         "$modMod, o, exit"
         "$modMod, w, exec, pkill waybar; waybar &"
@@ -344,66 +344,28 @@
     '';
   };
 
-  programs.wofi = {
+  programs.fuzzel = {
     enable = true;
-    style = ''
-      window {
-        margin: 0px;
-        background-color: #191724;
-        border-radius: 0px;
-        border: 2px solid #eb6f92;
-        color: #e0def4;
-        font-size: 20px;
-      }
-
-      #input {
-        margin: 5px;
-        border-radius: 0px;
-        border: none;
-        border-radius: 0px;;
-        color: #eb6f92;
-        background-color: #26233a;
-      }
-
-      #inner-box {
-        margin: 5px;
-        border: none;
-        background-color: #26233a;
-        color: #191724;
-        border-radius: 0px;
-      }
-
-      #outer-box {
-        margin: 15px;
-        border: none;
-        background-color: #191724;
-      }
-
-      #scroll {
-        margin: 0px;
-        border: none;
-      }
-
-      #text {
-        margin: 5px;
-        border: none;
-        color: #e0def4;
-      } 
-
-      #entry:selected {
-        background-color: #eb6f92;
-        color: #191724;
-        border-radius: 0px;;
-        outline: none;
-      }
-
-      #entry:selected * {
-        background-color: #eb6f92;
-        color: #191724;
-        border-radius: 0px;;
-        outline: none;
-      }
-    '';
+    settings = {
+      main = {
+        terminal = "${pkgs.kitty}/bin/kitty";
+      };
+      colors = {
+        background = "191724ff";
+        text = "e0def4ff";
+        prompt = "c4a7e7ff";
+        placeholder = "6e6a86ff";
+        input = "c4a7e7ff";
+        match = "c4a7e7ff";
+        selection = "6e6a86ff";
+        selection-text = "191724ff";
+        selection-match = "c4a7e7ff";
+        border = "eb6f92ff";
+      };
+      border = {
+        radius = 0;
+      };
+    };
   };
 
   services.gammastep = {
@@ -472,10 +434,6 @@
     };
   };
 
-  home.file.".local/bin/emoji-picker" = {
-    source = ./bin/emoji-picker.sh;
-    executable = true;
-  };
   home.file.".local/bin/powermenu" = {
     source = ./bin/powermenu.sh;
     executable = true;

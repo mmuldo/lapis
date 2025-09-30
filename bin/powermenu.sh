@@ -7,8 +7,7 @@ options="  shutdown
   suspend
   hibernate"
 
-# Show menu using wofi
-choice=$(echo -e "$options" | wofi --show dmenu --prompt "power menu")
+choice=$(echo -e "$options" | fuzzel --dmenu)
 
 # Take action based on choice
 case "$choice" in
