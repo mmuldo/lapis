@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 {
@@ -453,6 +454,17 @@
     source = ./bin/powermenu.sh;
     executable = true;
   };
+
+  xdg.desktopEntries.obsidian-nvim = {
+    name = "obsidian.nvim";
+    comment = "launch obsidian inside of nvim";
+    exec = "nvim ${config.home.homeDirectory}/vaults/notes/entry.md";
+    icon = "nvim";
+    type = "Application";
+    terminal = true;
+    categories = [ "Utility" "TextEditor" "Office" ];
+  };
+
 
   # you should not change this value, even if you update home manager
   home.stateVersion = "25.05"; # Did you read the comment?
