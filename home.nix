@@ -458,10 +458,10 @@
   xdg.desktopEntries.obsidian-nvim = {
     name = "obsidian.nvim";
     comment = "launch obsidian inside of nvim";
-    exec = "nvim ${config.home.homeDirectory}/vaults/notes/entry.md";
+    exec = "${pkgs.kitty}/bin/kitty --working-directory ${config.home.homeDirectory}/vaults/notes -e ${pkgs.neovim}/bin/nvim entry.md";
     icon = "nvim";
     type = "Application";
-    terminal = true;
+    terminal = false;
     categories = [ "Utility" "TextEditor" "Office" ];
   };
 
