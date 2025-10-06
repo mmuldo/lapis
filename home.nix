@@ -216,6 +216,7 @@
         "memory"
         "temperature"
         "network"
+        "bluetooth"
         "wireplumber"
         "battery"
         "clock"
@@ -250,6 +251,11 @@
         format-wifi = "🛜{essid}";
         format-ethernet = "🔗{essid}";
         format-disconnected = "🚫no network";
+      };
+
+      bluetooth = {
+        format = "🦷{status}";
+        format-connected = "🦷{device_alias}";
       };
 
       temperature = {
