@@ -24,6 +24,7 @@
     pass
     bemoji
     anki
+    slack
 
     #######################################
     # neovim
