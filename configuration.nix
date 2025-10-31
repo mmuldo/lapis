@@ -137,7 +137,6 @@
       fantasque-sans-mono
       nerd-fonts.caskaydia-cove
       noto-fonts
-      noto-fonts-extra
     ];
     fontconfig.defaultFonts = {
       monospace = [ "Fantasque Sans Mono" ];
