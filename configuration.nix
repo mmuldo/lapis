@@ -15,6 +15,7 @@
     mpv
     spotify
     zoom-us
+    discord
     brightnessctl
     obsidian
     libnotify
@@ -47,6 +48,10 @@
     tree-sitter
     #######################################
   ];
+
+  environment.variables = {
+    EDITOR = "nvim";
+  };
 
   nix.settings.experimental-features = [
     "nix-command"
