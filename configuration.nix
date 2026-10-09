@@ -26,6 +26,7 @@
     bemoji
     anki
     slack
+    vulkan-tools
 
     #######################################
     # neovim
@@ -35,10 +36,12 @@
     # lsp
     lua-language-server
     nixd
+    typescript-language-server
+    svelte-language-server
 
     # formatters
     stylua
-    nixfmt-rfc-style
+    nixfmt
 
     # dependencies
     fzf
@@ -48,6 +51,10 @@
     tree-sitter
     #######################################
   ];
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   environment.variables = {
     EDITOR = "nvim";
@@ -128,6 +135,7 @@
 
   programs.hyprland = {
     enable = true;
+    withUWSM = false;
     xwayland.enable = true;
   };
 
@@ -160,14 +168,26 @@
   programs.browserpass.enable = true;
 
   services.tlp.enable = true;
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+  };
 
   hardware.bluetooth = {
-    enable = true;
+    enable = false;
     settings = {
       Policy = {
         AutoEnable = false;
       };
     };
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      mesa
+    ];
   };
 
   # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,

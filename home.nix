@@ -55,8 +55,10 @@
         };
       }
     ];
-    userName = "Matt Muldowney";
-    userEmail = "matt.muldowney@gmail.com";
+    settings.user = {
+      name = "Matt Muldowney";
+      email = "matt.muldowney@gmail.com";
+    };
   };
 
   wayland.windowManager.hyprland = {
@@ -146,10 +148,6 @@
         "col.active_border" = "rgba(eb6f92ee)";
         "col.inactive_border" = "rgba(6e6a86aa)";
       };
-
-      env = [
-        "NIXOS_OZONE_WL,1"
-      ];
     };
   };
 
@@ -157,7 +155,7 @@
     enable = true;
     settings = {
       preload = [ "${./wallpaper.png}" ];
-      wallpaper = [ ",${./wallpaper.png}" ];
+      wallpaper = [ "LVDS-1,${./wallpaper.png}" ];
     };
   };
 
